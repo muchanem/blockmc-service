@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+
+from mcstatus import MinecraftServer
+
+#If you know the host and port, you may skip this and use MinecraftServer("example.org", 1234)
+server = MinecraftServer.lookup("localhost")
+
+
+#'query' has to be enabled in a servers' server.properties file.
+#It may give more information than a ping, such as a full player list or mod information.
+query = server.query()
+print("The server has the following players online: {0}".format(", ".join(query.players.names)))
