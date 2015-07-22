@@ -1,13 +1,28 @@
 #!/usr/bin/env python3
 
-
+import json
 from mcstatus import MinecraftServer
 
 #If you know the host and port, you may skip this and use MinecraftServer("example.org", 1234)
 server = MinecraftServer.lookup("localhost")
-
+status = server.status()
 
 #'query' has to be enabled in a servers' server.properties file.
 #It may give more information than a ping, such as a full player list or mod information.
 query = server.query()
-print("The server has the following players online: {0}".format(", ".join(query.players.names)))
+#print("The server has the following players online: {0}".format(", ".join(query.players.names))) 
+#print("and replied in {1} ms".format(status.players.online, status.latency))
+
+status = server.status()
+
+data = {
+    "stats": [
+        {
+            "ping": status.latency,
+            "players": status.players.online
+        },
+    ]
+}
+
+print(json.dumps(data))
+
